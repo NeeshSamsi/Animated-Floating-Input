@@ -1,0 +1,93 @@
+/* Default Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* General Styles */
+
+body {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* position: relative; so the children's position: absolute; works */
+
+/* overflow: hidden; to hide blue border-bottom when it's "out of frame" */
+
+.form {
+  width: 50%;
+  position: relative;
+  height: 50px;
+  overflow: hidden;
+}
+
+.form input {
+  width: 100%;
+  height: 100%;
+  color: #595f6e;
+  padding-top: 20px;
+  border: none;
+  outline: none;
+}
+
+/* Black border-bottom for when not :focus */
+
+/* 100% height and weight so it covers the input, making it not clickable, so pointer-events: none; to make it click through */
+
+.form label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  border-bottom: 1px solid black;
+}
+
+/* ::after added to add extra styles, thus content: ""; */
+
+/* Blue border-bottom with the translateX(-100%) to keep it "out of frame" with the overflow: hidden; */
+
+.form .label-name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 100%;
+  width: 100%;
+  border-bottom: 3px solid #5fa8d3;
+  transform: translateX(-100%);
+  transition: all 0.3s ease;
+}
+
+/* Individually positioning the Text in the Label. transition: all 0.3s ease; for the :focus{translateY(150%)} */
+
+.content-name {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  transition: all 0.3s ease;
+}
+
+/* When .form input is :focus and :valid it affects the <span> inside the Label (affecting something based on something else using "+") */
+
+.form input:focus + .label-name .content-name,
+.form input:valid + .label-name .content-name {
+  transform: translateY(-150%);
+  font-size: 14px;
+  color: #5fa8d3;
+}
+
+/* When .form input is :focus and :valid it affects the label::after to bring the "out of frame" blue border-bottom back in frame with the transform (the .3s ease comes from the all in the ::after itself)  */
+
+.form input:focus + .label-name::after,
+.form input:valid + .label-name::after {
+  transform: translateX(0%);
+}
